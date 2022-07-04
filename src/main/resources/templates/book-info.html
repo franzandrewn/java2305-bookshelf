@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Book info</title>
+    <script>
+        function sendDelete() {
+            var path = window.location.pathname.split('/');
+            var id = path[path.length - 1]
+            fetch('http://localhost:8081/book/' + id, {
+                method: 'DELETE'
+            })
+        }
+    </script>
+</head>
+<body>
+    <h3 th:text="${book.title}">Title</h3>
+    <h5 th:if="${book.date != null}" th:text="'Опубликована ' + ${#dates.format(book.date, 'yyyy-MMM-dd HH:mm')} + ' автором: ' + ${book.author}">Creation date and author</h5>
+    <h5 th:if="${book.date == null}" th:text="'Опубликована автором: ' + ${book.author}">Author</h5>
+    <button onclick="sendDelete()">Удалить книгу</button>
+    <a href="/index">Назад к списку</a>
+</body>
+</html>
